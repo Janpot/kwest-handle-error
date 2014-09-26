@@ -1,6 +1,6 @@
 {
   "name": "kwest-handle-error",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Reject responses with bad statuscode",
   "main": "index.js",
   "scripts": {
