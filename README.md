@@ -1,4 +1,4 @@
-# kwest-text
+# kwest-text [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
 
 Error handler [kwest](https://github.com/Janpot/kwest) module. Rejects responses with bad statuscodes
 
@@ -28,3 +28,10 @@ request('http://www.example.com/not-found')
     console.log(err.message); // "404: Not found"
   });
 ```
+
+
+[travis-url]: http://travis-ci.org/Janpot/kwest-handle-error
+[travis-image]: http://img.shields.io/travis/Janpot/kwest-handle-error.svg?style=flat
+
+[depstat-url]: https://david-dm.org/Janpot/kwest-handle-error
+[depstat-image]: http://img.shields.io/david/Janpot/kwest-handle-error.svg?style=flat
