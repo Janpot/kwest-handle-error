@@ -1,4 +1,4 @@
-# kwest-text [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
+# kwest-handle-error [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
 
 Error handler [kwest](https://github.com/Janpot/kwest) module. Rejects responses with bad statuscodes
 
