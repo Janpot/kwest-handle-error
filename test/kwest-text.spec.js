@@ -35,8 +35,9 @@ describe('kwest-text', function () {
       .then(function (res) {
         done(new Error('expected to fail'));
       })
-      .catch(function (err) {
+      .catch(kwestHandleError.StatusError, function (err) {
         assert.strictEqual(err.message, '404: Not Found');
+        assert.strictEqual(err.code, 404);
         done();
       })
       .catch(done);

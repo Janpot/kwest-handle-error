@@ -3,6 +3,17 @@
 var util = require('util'),
     http = require('http');
 
+
+function StatusError(statusCode) {
+  var desc = http.STATUS_CODES[statusCode];
+  this.name = 'StatusError';
+  this.message = util.format('%s: %s', statusCode, desc);
+  this.code = statusCode;
+}
+StatusError.prototype = new Error();
+StatusError.prototype.constructor = StatusError;
+
+
 function isGoodStatus(statusCode) {
   return 200 <= statusCode && statusCode < 400;
 }
@@ -11,13 +22,8 @@ function kwestHandleError(kwest) {
   return kwest.wrap(function (makeRequest, request) {
     return makeRequest(request)
       .then(function (response) {
-        var code = response.statusCode;
-        if (!isGoodStatus(code)) {
-          var desc = http.STATUS_CODES[code],
-              msg  = util.format('%s: %s', code, desc),
-              err  = new Error(msg);
-
-          throw err;
+        if (!isGoodStatus(response.statusCode)) {
+          throw new StatusError(response.statusCode);
         }
         
         return response;
@@ -25,4 +31,5 @@ function kwestHandleError(kwest) {
   });
 }
 
+kwestHandleError.StatusError = StatusError;
 module.exports = kwestHandleError;
