@@ -7,13 +7,12 @@ describe('kwest-text', function () {
 
   it('pass through good response', function (done) {
 
-    var kwestMock = kwest.wrap(function (request, next) {
+    var errorKwest = kwest(function (request) {
       return Promise.resolve({
         statusCode: 200
       });
-    });
+    }).use(kwestHandleError());
 
-    var errorKwest = kwestMock.wrap(kwestHandleError());
     errorKwest('http://www.example.com')
       .then(function (res) {
         done();
@@ -24,13 +23,12 @@ describe('kwest-text', function () {
 
   it('handles error', function (done) {
 
-    var kwestMock = kwest.wrap(function (request, next) {
+    var errorKwest = kwest(function (request) {
       return Promise.resolve({
         statusCode: 404
       });
-    });
+    }).use(kwestHandleError());
 
-    var errorKwest = kwestMock.wrap(kwestHandleError());
     errorKwest('http://www.example.com')
       .then(function (res) {
         done(new Error('expected to fail'));
