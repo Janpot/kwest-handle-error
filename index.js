@@ -18,9 +18,9 @@ function isGoodStatus(statusCode) {
   return 200 <= statusCode && statusCode < 400;
 }
 
-function kwestHandleError(kwest) {
-  return kwest.wrap(function (makeRequest, request) {
-    return makeRequest(request)
+function kwestHandleError() {
+  return function (request, next) {
+    return next(request)
       .then(function (response) {
         if (!isGoodStatus(response.statusCode)) {
           throw new StatusError(response.statusCode);
@@ -28,7 +28,7 @@ function kwestHandleError(kwest) {
         
         return response;
       });
-  });
+  };
 }
 
 kwestHandleError.StatusError = StatusError;

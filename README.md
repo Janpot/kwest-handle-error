@@ -1,6 +1,6 @@
 # kwest-handle-error [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
 
-Error handler [kwest](https://github.com/Janpot/kwest) module. Rejects responses with bad statuscodes
+Error handler middleware for [kwest](https://github.com/Janpot/kwest) module. Rejects responses with bad statuscodes.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Error handler [kwest](https://github.com/Janpot/kwest) module. Rejects responses
 
 without errorHandler
 ```js
-var request = require('kwest');
+var request = require('kwest-base');
 
 request('http://www.example.com/not-found')
   .then(function (res) {
@@ -21,7 +21,8 @@ request('http://www.example.com/not-found')
 with errorHandler
 ```js
 var handleError = require('kwest-handle-error'),
-    request     = handleError(require('kwest'));
+    kwest       = require('kwest-base'),
+    request     = kwest.wrap(handleError());
 
 request('http://www.example.com/not-found')
   .catch(function (err) {

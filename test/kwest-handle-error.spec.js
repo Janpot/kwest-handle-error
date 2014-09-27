@@ -1,19 +1,19 @@
 var kwestHandleError = require('..'),
     Promise   = require('bluebird'),
-    kwest     = require('kwest'),
+    kwest     = require('kwest-base'),
     assert    = require('chai').assert;
 
 describe('kwest-text', function () {
 
   it('pass through good response', function (done) {
 
-    var kwestMock = kwest.wrap(function (makeRequest, options) {
+    var kwestMock = kwest.wrap(function (request, next) {
       return Promise.resolve({
         statusCode: 200
       });
     });
 
-    var errorKwest = kwestHandleError(kwestMock);
+    var errorKwest = kwestMock.wrap(kwestHandleError());
     errorKwest('http://www.example.com')
       .then(function (res) {
         done();
@@ -24,13 +24,13 @@ describe('kwest-text', function () {
 
   it('handles error', function (done) {
 
-    var kwestMock = kwest.wrap(function (makeRequest, options) {
+    var kwestMock = kwest.wrap(function (request, next) {
       return Promise.resolve({
         statusCode: 404
       });
     });
 
-    var errorKwest = kwestHandleError(kwestMock);
+    var errorKwest = kwestMock.wrap(kwestHandleError());
     errorKwest('http://www.example.com')
       .then(function (res) {
         done(new Error('expected to fail'));
